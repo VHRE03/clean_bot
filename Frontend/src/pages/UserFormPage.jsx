@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../api/cleanBot.api";
-import { toast } from "react-hot-toast";
 
-export function LoginPage() {
+import { createUser } from "../api/cleanBot.api";
+
+export function UserForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    getValues,
   } = useForm();
 
   const [loading, setLoading] = useState(false);
@@ -27,12 +28,8 @@ export function LoginPage() {
 
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
-
     try {
-      const response = await loginUser({
-        username: data.username,
-        password: data.password,
-      });
+      const response = await createUser(data);
 
       if (response.data.token) {
         // Guardar el token en localStorage o en el estado global
@@ -40,22 +37,13 @@ export function LoginPage() {
         localStorage.setItem("token", token);
 
         // Mostrar la alerta de inicio de sesion
-        toast.success("Inicio de sesión exitoso");
+        toast.success("Registro exitoso");
 
         // Redirigir a la página de películas o dashboard
         navigate("/");
       }
     } catch (error) {
-      // Si el error tiene un status de 401, lo mostramos
-      if (error.response && error.response.status == 401) {
-        toast.error("Credenciales incorrectas");
-      } else {
-        // Para otros tipos de errores
-        toast.error("Ocurrió un error, intenta nuevamente");
-      }
-
-      // Limpiar los campos de entrada en caso de error
-      reset();
+      toast.error("Ocurrió un error, intenta nuevamente");
     } finally {
       setLoading(false);
     }
@@ -64,17 +52,30 @@ export function LoginPage() {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <label htmlFor="">Username</label>
-        <input
-          type="text"
-          {...register("username", { required: true })}
-          placeholder="Ingrese su usuario"
-        />
+        <label htmlFor="">Nombre de usuario</label>
+        <input type="text" {...register("username", { required: true })} />
         {errors.username && <span>Este campo es obligatorio</span>}
 
-        <label htmlFor="">Password</label>
+        <label htmlFor="">Coreo electronico</label>
+        <input type="email" {...register("email", { required: true })} />
+        {errors.email && <span>Este dcampo en obligatorio</span>}
+
+        <label htmlFor="">Contraseña</label>
         <input type="password" {...register("password", { required: true })} />
         {errors.password && <span>Este campo es obligatorio</span>}
+
+        <label htmlFor="">Confirmar contraseña</label>
+        <input
+          type="password"
+          {...register("password_confirm", {
+            required: true,
+            validate: (value) =>
+              value === getValues("password") || "Las contraseñas no coinciden",
+          })}
+        />
+        {errors.password_confirm && (
+          <span>{errors.password_confirm.message}</span>
+        )}
 
         <button type="submit" disabled={loading}>
           {loading ? "Cargando..." : "Iniciar sesión"}

@@ -7,3 +7,7 @@ const cleanBotApi = axios.create({
 export const loginUser = (credentials) => {
   return cleanBotApi.post("users-api/login/", credentials);
 };
+
+export const createUser = (user) => {
+  return cleanBotApi.post("users-api/users/", user);
+};
