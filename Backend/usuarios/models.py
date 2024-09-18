@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
+    # Atributos de AbstractUser
     username            = models.CharField(max_length = 100, unique=True, null=False)
     first_name          = None
     last_name           = None
@@ -15,6 +16,10 @@ class User(AbstractUser):
     is_superuser        = models.BooleanField(default=False)
     last_login          = None
     date_joined         = None
+
+    # Atributos adicionales
+    name = models.CharField(max_length=255, blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
 
     def __str__(self):
         return self.username

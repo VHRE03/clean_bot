@@ -4,6 +4,7 @@ import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { UserForm } from "./pages/UserFormPage";
 import { AdminPage } from "./pages/AdminPage";
+import { AdminForm } from "./pages/AdminFormPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<UserForm />} />
         <Route path="/admin_home" element={<AdminPage />} />
+        <Route path="/admin_register" element={<AdminForm />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
