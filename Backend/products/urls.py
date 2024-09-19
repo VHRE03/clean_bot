@@ -8,7 +8,7 @@ router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet, 'products')
 
 urlpatterns = [
-    path('products-api/', include(router.urls))
+    path('v1/', include(router.urls))
 ]
 
 if settings.DEBUG:

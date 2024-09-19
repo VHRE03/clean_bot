@@ -6,6 +6,9 @@ import { UserForm } from "./pages/UserFormPage";
 import { AdminPage } from "./pages/AdminPage";
 import { AdminForm } from "./pages/AdminFormPage";
 
+// Paginas de los productos
+import { ProductsPage } from "./pages/Products/ProductsPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +18,8 @@ function App() {
         <Route path="/signup" element={<UserForm />} />
         <Route path="/admin_home" element={<AdminPage />} />
         <Route path="/admin_register" element={<AdminForm />} />
+
+        <Route path="/CleanBot" element={<ProductsPage />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
