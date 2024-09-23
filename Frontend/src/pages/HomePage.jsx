@@ -4,7 +4,7 @@ import { HeroSection } from "../components/General/HeroSection";
 
 export function HomePage() {
   return (
-    <div>
+    <div className="bg-gray-950">
       <HeroSection />
       <Navbar />
       <ProductsList />
