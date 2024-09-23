@@ -6,6 +6,8 @@ import { UserForm } from "./pages/UserFormPage";
 import { AdminPage } from "./pages/AdminPage";
 import { AdminForm } from "./pages/AdminFormPage";
 
+import { Navbar } from "./components/General/NavBar";
+
 // Paginas de los productos
 import { ProductsPage } from "./pages/Products/ProductsPage";
 
