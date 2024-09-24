@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/cleanBot.api";
 import { toast } from "react-hot-toast";
+import robotVacuum from "../assets/login-image.jpg";
 
 export function LoginPage() {
   const {
@@ -62,24 +63,70 @@ export function LoginPage() {
   });
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="">Username</label>
-        <input
-          type="text"
-          {...register("username", { required: true })}
-          placeholder="Ingrese su usuario"
-        />
-        {errors.username && <span>Este campo es obligatorio</span>}
+    <div className="flex h-screen">
+      {/* Sección de la imagen y formulario */}
+      <div className="flex w-full">
+        {/* Sección de la imagen */}
+        <div className="hidden lg:flex lg:w-2/3">
+          <img
+            src={robotVacuum}
+            alt="Robot Vacuum"
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-        <label htmlFor="">Password</label>
-        <input type="password" {...register("password", { required: true })} />
-        {errors.password && <span>Este campo es obligatorio</span>}
+        {/* Sección del formulario */}
+        <div className="flex items-center justify-center w-full lg:w-1/2 bg-gray-800 p-10">
+          <div className="w-full max-w-md">
+            <h1 className="text-white text-6xl font-bold mb-8 text-center">
+              CleanBot
+            </h1>
+            <form onSubmit={onSubmit}>
+              <div className="mb-6">
+                <label className="block text-white mb-2" htmlFor="username">
+                  Username
+                </label>
+                <input
+                  className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
+                  type="text"
+                  {...register("username", { required: true })}
+                  placeholder="Ingrese su usuario"
+                />
+                {errors.username && (
+                  <span className="text-red-500">
+                    Este campo es obligatorio
+                  </span>
+                )}
+              </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Cargando..." : "Iniciar sesión"}
-        </button>
-      </form>
+              <div className="mb-6">
+                <label className="block text-white mb-2" htmlFor="password">
+                  Password
+                </label>
+                <input
+                  className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
+                  type="password"
+                  {...register("password", { required: true })}
+                  placeholder="Ingrese su contraseña"
+                />
+                {errors.password && (
+                  <span className="text-red-500">
+                    Este campo es obligatorio
+                  </span>
+                )}
+              </div>
+
+              <button
+                className="w-full py-3 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Cargando..." : "Iniciar sesión"}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
