@@ -24,3 +24,12 @@ export const createUser = (user) => {
 export const getAllUsers = () => {
   return cleanBotApi.get("users-api/users/");
 };
+
+// Función para obtener los datos del usuario por medio del token
+export const getLoginUser = (token) => {
+  return cleanBotApi.get("users-api/user-login/", {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
+};

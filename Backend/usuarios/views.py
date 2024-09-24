@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from .models import User
 from .serializer import UserSerializer
 from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import authenticate, login
 
@@ -37,3 +38,19 @@ class UserLogin(APIView):
             return Response({'token': token.key})
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+  
+# Obtener los datos del usuario por medio del token
+class UserData(APIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        
+        # Obtener el usuario autenticado
+        user = request.user
+        
+        # Serializar los datos del usuario
+        serializer = UserSerializer(user)
+        
+        # Devuelve los datos serializados
+        return Response(serializer.data)
