@@ -1,27 +1,26 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function AdminNavBar({ userData }) {
+export function AdminNavBar({ userData, onOptionChange }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Lógica para cerrar sesión, como eliminar el token del localStorage
     localStorage.removeItem("token");
-    navigate("/login"); // Redirige a la página de login
+    navigate("/login");
   };
 
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setIsMenuOpen(false); // Cierra el menú si se hace clic fuera de él
+      setIsMenuOpen(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside); // Escucha clics en el documento
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside); // Limpia el evento al desmontar
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -33,24 +32,31 @@ export function AdminNavBar({ userData }) {
         </a>
       </div>
       <ul className="flex space-x-6 items-center">
+        {/* Botón para mostrar productos */}
         <li>
-          <a href="/" className="hover:text-gray-300">
+          <button
+            className="hover:text-gray-300"
+            onClick={() => onOptionChange("products")}
+          >
             Productos
-          </a>
+          </button>
         </li>
+        {/* Botón para mostrar usuarios */}
         <li>
-          <a href="/about" className="hover:text-gray-300">
+          <button
+            className="hover:text-gray-300"
+            onClick={() => onOptionChange("users")}
+          >
             Usuarios
-          </a>
+          </button>
         </li>
         <li className="relative" ref={menuRef}>
           <button
             className="flex items-center hover:text-gray-300"
-            onClick={() => setIsMenuOpen(!isMenuOpen)} // Alterna el estado del menú
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {userData ? userData.username : "Usuario"}{" "}
-            {/* Muestra el nombre del usuario */}
-            <span className="ml-2">▼</span> {/* Icono de menú desplegable */}
+            <span className="ml-2">▼</span>
           </button>
           {isMenuOpen && (
             <ul className="absolute right-0 w-40 mt-2 bg-gray-700 rounded shadow-lg">
@@ -58,7 +64,7 @@ export function AdminNavBar({ userData }) {
                 <button
                   onClick={() => {
                     navigate("/edit-profile");
-                    setIsMenuOpen(false); // Cierra el menú después de hacer clic
+                    setIsMenuOpen(false);
                   }}
                   className="block px-4 py-2 text-left hover:bg-gray-600 w-full"
                 >
@@ -69,7 +75,7 @@ export function AdminNavBar({ userData }) {
                 <button
                   onClick={() => {
                     handleLogout();
-                    setIsMenuOpen(false); // Cierra el menú después de hacer clic
+                    setIsMenuOpen(false);
                   }}
                   className="block px-4 py-2 text-left hover:bg-gray-600 w-full"
                 >
