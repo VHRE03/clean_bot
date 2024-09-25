@@ -42,7 +42,7 @@ export function AdminPage() {
 
   return (
     <div>
-      <AdminNavBar />
+      <AdminNavBar userData={userData} />
       <div>
         <button onClick={handleCreateUser}>Nuevo usuario</button>
       </div>
